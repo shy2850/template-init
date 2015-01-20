@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本用法</title>
+<style>
+    .panel{
+        width: 800px;
+        margin: 50px auto;
+    }
+    .code{
+        background: #d2d2d2;
+        padding: 1em;
+    }
+</style>
+</head>
+<body>
+
+<div class="panel">
+    <h2>使用模板加载的数据列表</h2>
+<pre class="code" id="template-code">
+</pre>
+<pre class="code">
+(function(T){
+    T.init({
+        tmpl: "#tmpl-01",
+        target: "#show-01",
+        sourceUrl: "data/list.json" 
+    });
+})(TemplateInit);
+</pre>
+
+    <ul id="show-01">
+        
+    </ul>
+<script type="template" id="tmpl-01">
+    {{#with timeline}}
+    {{#each date}}
+        <li>{{startDate}} : {{headline}}</li>
+    {{/each}}
+    {{/with}}
+</script>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>  
+<script src="template-init.js?debug=true"></script>
+<script>
+(function(T){
+    $("#template-code").text( $("#tmpl-01")[0].outerHTML );
+
+    T.init({
+        tmpl: "#tmpl-01",
+        target: "#show-01",
+        sourceUrl: "data/list.json" 
+    });
+})(TemplateInit);
+</script>
+</body>
+</html>
