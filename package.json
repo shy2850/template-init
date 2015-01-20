@@ -1,0 +1,36 @@
+{
+  "name": "template-init",
+  "filename": "template-init.min.js",
+  "homepage" : "http://shy2850.github.io/template-init/",
+  "version": "0.1.0",
+  "description": "快速集成ajax查询分页数据填充插件",
+  "main": "template-init.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "maintainers": [
+    {
+      "name": "shy2850",
+      "mail": "shy2850@163.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shy2850/template-init"
+  },
+  "repositorires": [{
+    "type": "git",
+    "url": "https://github.com/shy2850/template-init"
+  }],
+  "keywords": [
+    "jquery",
+    "handlebars",
+    "ajax",
+    "page"
+  ],
+  "author": "shy2850",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shy2850/template-init/issues"
+  }
+}
