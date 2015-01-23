@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>同步数据调用</title>
+<style>
+    .panel{
+        width: 800px;
+        margin: 50px auto;
+    }
+    .code{
+        background: #d2d2d2;
+        padding: 1em;
+    }
+    .pager{
+        line-height: 30px;
+    }
+    .pager span, .pager a{
+        padding: 4px 6px;
+        margin: 0 8px;
+        cursor: pointer;
+    }
+    .pager .pagination-curr{
+        background: #f26c4f;
+        color: #fff;
+    }
+    ul{
+        width: 28%;
+        padding: 1em;
+        margin-left: 6px;
+        float: left;
+        height: 100px;
+        background: #eee;
+        border: 1px solid #d2d2d2;
+    }
+</style>
+</head>
+<body>
+
+<div class="panel">
+    <h2>同步数据调用</h2>
+    <p>直接添加source参数可以定义同步数据(优先级低于sourceUrl)</p>
+<pre class="code" id="template-code">
+</pre>
+<pre class="code">
+(function(T){
+    T.init({
+        tmpl: "#tmpl-01"
+    });
+})(TemplateInit);
+</pre>
+    <ul id="show-01"></ul>
+    <ul id="show-02"></ul>
+    <ul id="show-03"></ul>
+
+<script type="template" id="tmpl-01" data-target="#show-01" >
+    {{#each childNodes}}
+        <li data-id="{{id}}">{{name}}</li>
+    {{/each}}
+</script>
+<script type="template" id="tmpl-02" data-target="#show-02" >
+    {{#each childNodes}}
+        <li data-id="{{id}}">{{name}}</li>
+    {{/each}}
+</script>
+<script type="template" id="tmpl-03" data-target="#show-03" >
+    {{#each childNodes}}
+        <li data-id="{{id}}">{{name}}</li>
+    {{/each}}
+</script>
+</div>
+
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>  
+<script src="template-init.js?debug=true"></script>
+<script>
+(function(T){
+    var data = {
+        childNodes:[
+            {
+                name: "html",
+                id: "001",
+                childNodes: [
+                    {
+                        name: "jsp",
+                        id: "004"
+                    },
+                    {
+                        name: "asp",
+                        id: "005"
+                    },
+                    {
+                        name: "php",
+                        id: "006"
+                    }
+                ]
+            },
+            {
+                name: "css",
+                id: "002",
+                childNodes: [
+                    {
+                        name: "LESS",
+                        id: "007"
+                    },
+                    {
+                        name: "SASS",
+                        id: "008"
+                    }
+                ]
+            },
+            {
+                name: "js",
+                id: "003",
+                childNodes: [
+                    {
+                        name: "javascript",
+                        id: "009",
+                        childNodes:[
+                            {
+                                name: "ECMAScript",
+                                id: "011"
+                            },
+                            {
+                                name: "BOM",
+                                id: "012"
+                            },
+                            {
+                                name: "DOM",
+                                id: "013"
+                            }
+
+                        ]
+                    },
+                    {
+                        name: "nodejs",
+                        id: "010",
+                        childNodes:[
+                            {
+                                name: "npm",
+                                id: "014"
+                            },
+                            {
+                                name: "coffee",
+                                id: "012"
+                            },
+                            {
+                                name: "express",
+                                id: "013"
+                            }
+
+                        ]
+                    }
+                ]
+            }
+        ]
+    };
+
+    function getData(id,o,res){
+        o = o || data;
+        res = res || [];
+        for(var i in o.childNodes){
+            if(o.childNodes[i].id===id){
+                res.push(o.childNodes[i]);
+            }else{
+                if( o.childNodes[i].childNodes  ){
+                    getData(id,o.childNodes[i],res);
+                }
+            }
+        }
+        return res;
+    }
+
+    $("#template-code").text( $("#tmpl-01")[0].outerHTML );
+
+    T.init({
+        tmpl: "#tmpl-01",
+        source: data
+    });
+
+    $("#show-01").on("click","li",function(){
+        var d = getData( $(this).data("id") );
+        T.init({
+            tmpl: "#tmpl-02",
+            source: d[0]
+        });
+    });
+    $("#show-02").on("click","li",function(){
+        var d = getData( $(this).data("id") );
+        T.init({
+            tmpl: "#tmpl-03",
+            source: d[0]
+        });
+    });
+
+})(TemplateInit);
+</script>
+</body>
+</html>
